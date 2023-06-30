@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-fed",
-  "version": "1.0.0",
+  "version": "1.0.1-beta.0",
   "description": "eslint and prettier config",
   "author": "FrontEndDog",
   "license": "MIT",
@@ -18,6 +18,8 @@
     "config"
   ],
   "exports": {
+    ".": "./src/eslint.config.js",
+    "./eslint": "./src/eslint.config.js",
     "./prettier": "./src/prettier.config.js"
   },
   "main": "src/eslint.config.js",
