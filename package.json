@@ -17,9 +17,12 @@
     "prettier",
     "config"
   ],
-  "main": "index.js",
+  "exports": {
+    "./prettier": "./src/prettier.config.js"
+  },
+  "main": "src/eslint.config.js",
   "files": [
-    "index.js"
+    "src"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

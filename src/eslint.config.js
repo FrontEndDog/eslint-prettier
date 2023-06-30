@@ -7,7 +7,6 @@ console.log('[eslint-config-fed]:是否使用typescript', TS)
 module.exports = defineConfig({
   env: {
     es6: true,
-    es2022: true,
     browser: true,
     node: true,
   },
