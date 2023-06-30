@@ -27,10 +27,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "peerDependencies": {
+    "eslint": ">=8.0.0"
+  },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",
-    "eslint": "^8.43.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-define-config": "^1.21.0",
     "eslint-plugin-eslint-comments": "^3.2.0",
@@ -46,5 +48,8 @@
     "local-pkg": "^0.4.3",
     "prettier": "^2.8.8",
     "vue-eslint-parser": "^9.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.43.0"
   }
 }
