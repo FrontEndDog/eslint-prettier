@@ -32,7 +32,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "peerDependencies": {
-    "eslint": ">=8.0.0"
+    "eslint": ">=8.0.0",
+    "stylelint": ">=15.0.0"
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^5.61.0",
