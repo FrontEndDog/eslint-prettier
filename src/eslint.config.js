@@ -1,8 +1,11 @@
 const { defineConfig } = require('eslint-define-config')
 const { isPackageExists } = require('local-pkg')
-const TS = isPackageExists('typescript')
 
+const TS = isPackageExists('typescript')
 console.log('[eslint-config-fed]:是否使用typescript', TS)
+
+const tailwind = isPackageExists('tailwindcss')
+console.log('[eslint-config-fed]:是否使用tailwindcss', tailwind)
 
 module.exports = defineConfig({
   env: {
