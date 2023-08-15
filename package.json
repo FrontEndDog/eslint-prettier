@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-fed",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "eslint prettier stylelint config",
   "author": "FrontEndDog",
   "license": "MIT",
