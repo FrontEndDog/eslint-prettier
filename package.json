@@ -21,6 +21,7 @@
   "exports": {
     ".": "./src/eslint.config.js",
     "./eslint": "./src/eslint.config.js",
+    "./eslint-vue2": "./src/eslint.config.vue2.js",
     "./prettier": "./src/prettier.config.js",
     "./stylelint": "./src/stylelint.config.js"
   },

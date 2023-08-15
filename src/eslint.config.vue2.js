@@ -67,7 +67,7 @@ module.exports = defineConfig({
     'plugin:eslint-comments/recommended',
     'plugin:jsonc/recommended-with-jsonc',
     'plugin:markdown/recommended',
-    'plugin:vue/vue3-recommended',
+    'plugin:vue/recommended',
     ...(TS ? ['plugin:@typescript-eslint/recommended'] : []),
     'prettier',
   ],
