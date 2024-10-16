@@ -1,7 +1,7 @@
-const { isPackageExists } = require('local-pkg')
+import { isPackageExists } from 'local-pkg'
 const tailwind = isPackageExists('tailwindcss')
 
-module.exports = {
+export default {
   printWidth: 120,
   singleQuote: true,
   semi: false,

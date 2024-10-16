@@ -1,176 +1,319 @@
-const { defineConfig } = require('eslint-define-config')
-const { isPackageExists } = require('local-pkg')
+import globals from 'globals'
+import eslint from '@eslint/js'
+import unusedImports from 'eslint-plugin-unused-imports'
+import jsdoc from 'eslint-plugin-jsdoc'
+import eslintPluginUnicorn from 'eslint-plugin-unicorn'
+import pluginPromise from 'eslint-plugin-promise'
+import tseslint from 'typescript-eslint'
+import * as regexpPlugin from 'eslint-plugin-regexp'
+import pluginVue from 'eslint-plugin-vue'
+import eslintPluginJsonc from 'eslint-plugin-jsonc'
+import eslintPluginYml from 'eslint-plugin-yml'
+import markdown from 'eslint-plugin-markdown'
+import html from 'eslint-plugin-html'
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 
+import { isPackageExists } from 'local-pkg'
 const TS = isPackageExists('typescript')
-console.log('[eslint-config-fed]:是否使用typescript', TS)
 
-module.exports = defineConfig({
-  env: {
-    es6: true,
-    browser: true,
-    node: true,
-  },
-
-  parserOptions: {
-    ecmaVersion: 'latest',
-    ecmaFeatures: {
-      jsx: true,
-    },
-    sourceType: 'module',
-  },
-
-  globals: {
-    document: 'readonly',
-    navigator: 'readonly',
-    window: 'readonly',
-  },
-
-  ignorePatterns: [
-    '*.min.*',
-    '*.d.ts',
-    'CHANGELOG.md',
-    'dist',
-    'LICENSE*',
-    'output',
-    'out',
-    'coverage',
-    'public',
-    'temp',
-    'package-lock.json',
-    'pnpm-lock.yaml',
-    'yarn.lock',
-    '__snapshots__',
-    // ignore for in lint-staged
-    '*.css',
-    '*.png',
-    '*.ico',
-    '*.toml',
-    '*.patch',
-    '*.txt',
-    '*.crt',
-    '*.key',
-    'Dockerfile',
-    // force include
-    '!.github',
-    '!.vitepress',
-    '!.vscode',
-    // force exclude
-    '.vitepress/cache',
-  ],
-
-  plugins: ['promise', 'html', 'unicorn', 'unused-imports', ...(TS ? ['@typescript-eslint'] : []), 'prettier'],
-
-  extends: [
-    'eslint:recommended',
-    'plugin:import/recommended',
-    ...(TS ? ['plugin:import/typescript'] : []),
-    'plugin:eslint-comments/recommended',
-    'plugin:jsonc/recommended-with-jsonc',
-    'plugin:markdown/recommended',
-    'plugin:vue/vue3-recommended',
-    ...(TS ? ['plugin:@typescript-eslint/recommended'] : []),
-    'prettier',
-  ],
-
-  overrides: [
-    {
-      files: ['*.ts', '*.tsx', '*.mts', '*.cts'],
-      parser: '@typescript-eslint/parser',
-    },
-    {
-      files: ['*.d.ts'],
-      rules: {
-        'import/no-duplicates': 'off',
-      },
-    },
-    {
-      files: ['*.js', '*.cjs', '*.jsx'],
-      rules: {
-        '@typescript-eslint/no-var-requires': 'off',
-        '@typescript-eslint/no-require-imports': 'off',
-      },
-    },
-    {
-      files: ['*.vue'],
-      parser: 'vue-eslint-parser',
+export default [
+  {
+    languageOptions: {
+      ecmaVersion: 2024,
+      sourceType: 'module',
       parserOptions: {
-        parser: '@typescript-eslint/parser',
+        ecmaFeatures: {
+          jsx: true,
+        },
       },
+      globals: { ...globals.browser, ...globals.es2024, ...globals.node },
     },
-    {
-      files: ['*.json', '*.json5', '*.jsonc'],
-      parser: 'jsonc-eslint-parser',
-    },
-    {
-      files: ['package.json'],
-      parser: 'jsonc-eslint-parser',
-      rules: {
-        'jsonc/sort-keys': [
-          'error',
-          {
-            pathPattern: '^$',
-            order: [
-              'publisher',
-              'name',
-              'displayName',
-              'type',
-              'version',
-              'private',
-              'packageManager',
-              'description',
-              'author',
-              'license',
-              'funding',
-              'homepage',
-              'repository',
-              'bugs',
-              'keywords',
-              'categories',
-              'sideEffects',
-              'exports',
-              'main',
-              'module',
-              'unpkg',
-              'jsdelivr',
-              'types',
-              'typesVersions',
-              'bin',
-              'icon',
-              'files',
-              'engines',
-              'activationEvents',
-              'contributes',
-              'scripts',
-              'peerDependencies',
-              'peerDependenciesMeta',
-              'dependencies',
-              'optionalDependencies',
-              'devDependencies',
-              'pnpm',
-              'overrides',
-              'resolutions',
-              'husky',
-              'simple-git-hooks',
-              'lint-staged',
-              'eslintConfig',
-            ],
-          },
-          {
-            pathPattern: '^(?:dev|peer|optional|bundled)?[Dd]ependencies$',
-            order: { type: 'asc' },
-          },
-          {
-            pathPattern: '^exports.*$',
-            order: ['types', 'require', 'import'],
-          },
-        ],
-      },
-    },
-  ],
-
-  rules: {
-    'vue/multi-word-component-names': 'off', //取消vue组件必须命名为多个单词
-    'import/no-unresolved': 'off', //允许使用export * from "./test"
-    'vue/no-v-html': 'off', //允许使用v-html
   },
-})
+  // eslint基础规则
+  eslint.configs.recommended,
+
+  // unused-imports
+  { plugins: { 'unused-imports': unusedImports } },
+
+  // jsdoc
+  jsdoc.configs['flat/recommended'],
+
+  // unicorn
+  eslintPluginUnicorn.configs['flat/recommended'],
+
+  // promise
+  pluginPromise.configs['flat/recommended'],
+
+  // typescript
+  ...(TS ? tseslint.configs.recommended : []),
+
+  //regexp
+  regexpPlugin.configs['flat/recommended'],
+
+  // vue
+  ...pluginVue.configs['flat/recommended'],
+
+  // json
+  ...eslintPluginJsonc.configs['flat/recommended-with-jsonc'],
+
+  // yml
+  ...eslintPluginYml.configs['flat/recommended'],
+
+  // markdown
+  ...markdown.configs.recommended,
+
+  // html
+  { files: ['**/*.html'], plugins: { html } },
+
+  // prettier
+  eslintPluginPrettierRecommended,
+
+  // package.json
+  {
+    files: ['**/package.json'],
+    rules: {
+      'jsonc/sort-array-values': [
+        'error',
+        {
+          order: { type: 'asc' },
+          pathPattern: '^files$',
+        },
+      ],
+      'jsonc/sort-keys': [
+        'error',
+        {
+          order: [
+            'publisher',
+            'name',
+            'displayName',
+            'type',
+            'version',
+            'private',
+            'packageManager',
+            'description',
+            'author',
+            'contributors',
+            'license',
+            'funding',
+            'homepage',
+            'repository',
+            'bugs',
+            'keywords',
+            'categories',
+            'sideEffects',
+            'exports',
+            'main',
+            'module',
+            'unpkg',
+            'jsdelivr',
+            'types',
+            'typesVersions',
+            'bin',
+            'icon',
+            'files',
+            'engines',
+            'activationEvents',
+            'contributes',
+            'scripts',
+            'peerDependencies',
+            'peerDependenciesMeta',
+            'dependencies',
+            'optionalDependencies',
+            'devDependencies',
+            'pnpm',
+            'overrides',
+            'resolutions',
+            'husky',
+            'simple-git-hooks',
+            'lint-staged',
+            'eslintConfig',
+          ],
+          pathPattern: '^$',
+        },
+        {
+          order: { type: 'asc' },
+          pathPattern: '^(?:dev|peer|optional|bundled)?[Dd]ependencies(Meta)?$',
+        },
+        {
+          order: { type: 'asc' },
+          pathPattern: '^(?:resolutions|overrides|pnpm.overrides)$',
+        },
+        {
+          order: ['types', 'import', 'require', 'default'],
+          pathPattern: '^exports.*$',
+        },
+        {
+          order: [
+            // client hooks only
+            'pre-commit',
+            'prepare-commit-msg',
+            'commit-msg',
+            'post-commit',
+            'pre-rebase',
+            'post-rewrite',
+            'post-checkout',
+            'post-merge',
+            'pre-push',
+            'pre-auto-gc',
+          ],
+          pathPattern: '^(?:gitHooks|husky|simple-git-hooks)$',
+        },
+      ],
+    },
+  },
+
+  // tsconfig.json
+  {
+    files: ['**/tsconfig.json', '**/tsconfig.*.json'],
+    name: 'antfu/sort/tsconfig-json',
+    rules: {
+      'jsonc/sort-keys': [
+        'error',
+        {
+          order: ['extends', 'compilerOptions', 'references', 'files', 'include', 'exclude'],
+          pathPattern: '^$',
+        },
+        {
+          order: [
+            /* Projects */
+            'incremental',
+            'composite',
+            'tsBuildInfoFile',
+            'disableSourceOfProjectReferenceRedirect',
+            'disableSolutionSearching',
+            'disableReferencedProjectLoad',
+            /* Language and Environment */
+            'target',
+            'jsx',
+            'jsxFactory',
+            'jsxFragmentFactory',
+            'jsxImportSource',
+            'lib',
+            'moduleDetection',
+            'noLib',
+            'reactNamespace',
+            'useDefineForClassFields',
+            'emitDecoratorMetadata',
+            'experimentalDecorators',
+            /* Modules */
+            'baseUrl',
+            'rootDir',
+            'rootDirs',
+            'customConditions',
+            'module',
+            'moduleResolution',
+            'moduleSuffixes',
+            'noResolve',
+            'paths',
+            'resolveJsonModule',
+            'resolvePackageJsonExports',
+            'resolvePackageJsonImports',
+            'typeRoots',
+            'types',
+            'allowArbitraryExtensions',
+            'allowImportingTsExtensions',
+            'allowUmdGlobalAccess',
+            /* JavaScript Support */
+            'allowJs',
+            'checkJs',
+            'maxNodeModuleJsDepth',
+            /* Type Checking */
+            'strict',
+            'strictBindCallApply',
+            'strictFunctionTypes',
+            'strictNullChecks',
+            'strictPropertyInitialization',
+            'allowUnreachableCode',
+            'allowUnusedLabels',
+            'alwaysStrict',
+            'exactOptionalPropertyTypes',
+            'noFallthroughCasesInSwitch',
+            'noImplicitAny',
+            'noImplicitOverride',
+            'noImplicitReturns',
+            'noImplicitThis',
+            'noPropertyAccessFromIndexSignature',
+            'noUncheckedIndexedAccess',
+            'noUnusedLocals',
+            'noUnusedParameters',
+            'useUnknownInCatchVariables',
+            /* Emit */
+            'declaration',
+            'declarationDir',
+            'declarationMap',
+            'downlevelIteration',
+            'emitBOM',
+            'emitDeclarationOnly',
+            'importHelpers',
+            'importsNotUsedAsValues',
+            'inlineSourceMap',
+            'inlineSources',
+            'mapRoot',
+            'newLine',
+            'noEmit',
+            'noEmitHelpers',
+            'noEmitOnError',
+            'outDir',
+            'outFile',
+            'preserveConstEnums',
+            'preserveValueImports',
+            'removeComments',
+            'sourceMap',
+            'sourceRoot',
+            'stripInternal',
+            /* Interop Constraints */
+            'allowSyntheticDefaultImports',
+            'esModuleInterop',
+            'forceConsistentCasingInFileNames',
+            'isolatedDeclarations',
+            'isolatedModules',
+            'preserveSymlinks',
+            'verbatimModuleSyntax',
+            /* Completeness */
+            'skipDefaultLibCheck',
+            'skipLibCheck',
+          ],
+          pathPattern: '^compilerOptions$',
+        },
+      ],
+    },
+  },
+  // ignores
+  {
+    ignores: [
+      '**/node_modules',
+      '**/dist',
+      '**/package-lock.json',
+      '**/yarn.lock',
+      '**/pnpm-lock.yaml',
+      '**/bun.lockb',
+
+      '**/output',
+      '**/coverage',
+      '**/temp',
+      '**/.temp',
+      '**/tmp',
+      '**/.tmp',
+      '**/.history',
+      '**/.vitepress/cache',
+      '**/.nuxt',
+      '**/.next',
+      '**/.svelte-kit',
+      '**/.vercel',
+      '**/.changeset',
+      '**/.idea',
+      '**/.cache',
+      '**/.output',
+      '**/.vite-inspect',
+      '**/.yarn',
+      '**/vite.config.*.timestamp-*',
+
+      '**/CHANGELOG*.md',
+      '**/*.min.*',
+      '**/LICENSE*',
+      '**/__snapshots__',
+      '**/auto-import?(s).d.ts',
+      '**/components.d.ts',
+    ],
+  },
+]

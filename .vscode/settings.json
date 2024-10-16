@@ -2,24 +2,11 @@
   //配置保存自动格式化
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.fixAll.stylelint": true
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.stylelint": "explicit"
   },
   //指定默认格式化工具
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  //指定eslint需要检查的文件
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "vue",
-    "html",
-    "markdown",
-    "json",
-    "jsonc",
-    "yaml"
-  ],
   //指定stylelint需要检查的文件
   "stylelint.validate": ["css", "scss", "less", "vue"],
   //关闭vscode内置样式校验,不然使用tailwindcss会报错

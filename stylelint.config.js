@@ -1,2 +1,1 @@
-
-module.exports =  require('./src/stylelint.config.js')
+export { default } from './src/stylelint.config.js'
