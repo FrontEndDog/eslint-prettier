@@ -11,7 +11,7 @@ pnpm i eslint-config-fed -D
 ## 在根目录添加文件
 
 ```js
-// .eslintrc.js
+// eslint.config.js
 import eslintConfigFed from 'eslint-config-fed/eslint'
 export default [
   ...eslintConfigFed,
