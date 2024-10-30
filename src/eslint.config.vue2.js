@@ -13,10 +13,7 @@ import markdown from 'eslint-plugin-markdown'
 import html from 'eslint-plugin-html'
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 
-import { isPackageExists } from 'local-pkg'
-const TS = isPackageExists('typescript')
-
-export default [
+export default tseslint.configs(
   {
     languageOptions: {
       ecmaVersion: 2024,
@@ -45,7 +42,7 @@ export default [
   pluginPromise.configs['flat/recommended'],
 
   // typescript
-  ...(TS ? tseslint.configs.recommended : []),
+  ...tseslint.configs.recommended,
 
   //regexp
   regexpPlugin.configs['flat/recommended'],
@@ -316,4 +313,4 @@ export default [
       '**/components.d.ts',
     ],
   },
-]
+)
