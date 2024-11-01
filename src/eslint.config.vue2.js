@@ -2,7 +2,6 @@ import globals from 'globals'
 import eslint from '@eslint/js'
 import unusedImports from 'eslint-plugin-unused-imports'
 import jsdoc from 'eslint-plugin-jsdoc'
-import eslintPluginUnicorn from 'eslint-plugin-unicorn'
 import pluginPromise from 'eslint-plugin-promise'
 import tseslint from 'typescript-eslint'
 import * as regexpPlugin from 'eslint-plugin-regexp'
@@ -34,9 +33,6 @@ export default tseslint.configs(
 
   // jsdoc
   jsdoc.configs['flat/recommended'],
-
-  // unicorn
-  eslintPluginUnicorn.configs['flat/recommended'],
 
   // promise
   pluginPromise.configs['flat/recommended'],
