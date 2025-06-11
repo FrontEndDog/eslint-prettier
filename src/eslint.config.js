@@ -11,18 +11,19 @@ import eslintPluginYml from 'eslint-plugin-yml'
 import markdown from 'eslint-plugin-markdown'
 import html from 'eslint-plugin-html'
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
+import unocss from '@unocss/eslint-config/flat'
 
 export default tseslint.config(
   {
     languageOptions: {
-      ecmaVersion: 2024,
+      ecmaVersion: 2025,
       sourceType: 'module',
       parserOptions: {
         ecmaFeatures: {
           jsx: true,
         },
       },
-      globals: { ...globals.browser, ...globals.es2024, ...globals.node },
+      globals: { ...globals.browser, ...globals.es2025, ...globals.node },
     },
   },
   // eslint基础规则
@@ -46,6 +47,8 @@ export default tseslint.config(
   // vue
   ...pluginVue.configs['flat/recommended'],
 
+  unocss,
+
   // json
   ...eslintPluginJsonc.configs['flat/recommended-with-jsonc'],
 
@@ -64,6 +67,7 @@ export default tseslint.config(
   // package.json
   {
     files: ['**/package.json'],
+    name: 'antfu/sort/package-json',
     rules: {
       'jsonc/sort-array-values': [
         'error',
@@ -94,6 +98,7 @@ export default tseslint.config(
             'keywords',
             'categories',
             'sideEffects',
+            'imports',
             'exports',
             'main',
             'module',
@@ -188,6 +193,7 @@ export default tseslint.config(
             'useDefineForClassFields',
             'emitDecoratorMetadata',
             'experimentalDecorators',
+            'libReplacement',
             /* Modules */
             'baseUrl',
             'rootDir',
@@ -262,6 +268,7 @@ export default tseslint.config(
             'isolatedModules',
             'preserveSymlinks',
             'verbatimModuleSyntax',
+            'erasableSyntaxOnly',
             /* Completeness */
             'skipDefaultLibCheck',
             'skipLibCheck',
@@ -272,10 +279,12 @@ export default tseslint.config(
     },
   },
 
+  //vue
   {
-    files: ['*.vue', '**/*.vue'],
+    files: ['**/*.vue'],
     languageOptions: {
       parserOptions: {
+        extraFileExtensions: ['.vue'],
         parser: '@typescript-eslint/parser',
       },
     },
