@@ -47,7 +47,7 @@ export default tseslint.config(
   // vue
   ...pluginVue.configs['flat/recommended'],
 
-  isPackageExists('unocss') ? unocss : null,
+  ...(isPackageExists('unocss') ? [unocss] : []),
 
   // json
   ...eslintPluginJsonc.configs['flat/recommended-with-jsonc'],
