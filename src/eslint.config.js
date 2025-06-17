@@ -12,7 +12,7 @@ import markdown from 'eslint-plugin-markdown'
 import html from 'eslint-plugin-html'
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 import unocss from '@unocss/eslint-config/flat'
-
+import { isPackageExists } from 'local-pkg'
 export default tseslint.config(
   {
     languageOptions: {
@@ -47,7 +47,7 @@ export default tseslint.config(
   // vue
   ...pluginVue.configs['flat/recommended'],
 
-  unocss,
+  isPackageExists('unocss') ? unocss : null,
 
   // json
   ...eslintPluginJsonc.configs['flat/recommended-with-jsonc'],
